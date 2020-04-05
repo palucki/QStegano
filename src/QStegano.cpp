@@ -15,6 +15,8 @@
 
 #include <QDebug>
 
+auto QtImageFormat = QImage::Format_RGBA8888;
+
 QStegano::QStegano(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -62,8 +64,13 @@ QStegano::QStegano(QWidget *parent)
 
     connect(ui.pbSave, &QPushButton::clicked, this, [this]
     {
-       auto file = QFileDialog::getSaveFileName(this, tr("Save file"), "../application/resources/");
-       QImage out(mOutput.data(), mOutput.width(), mOutput.height(), QImage::Format_RGB888);
+       auto file = QFileDialog::getSaveFileName(this, tr("Save file"), "./");
+       QImage out(mOutput.data(), mOutput.width(), mOutput.height(), QtImageFormat);
+
+       QFileInfo fi{ file };
+       if (fi.suffix().isEmpty())
+          file += ".png";
+
        out.save(file);
     });
 
@@ -81,7 +88,7 @@ QStegano::QStegano(QWidget *parent)
 
 void QStegano::loadImage()
 {
-   QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"), "../application/resources/");
+   QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"), "./");
    if (!fileNames.isEmpty())
    {
       ui.swInput->setCurrentWidget(ui.pPreview);
@@ -115,7 +122,7 @@ void QStegano::hide()
    try
    {
       QImage src{ mInputFile };
-      src.convertTo(QImage::Format_RGB888);
+      src.convertTo(QtImageFormat);
       CImg<unsigned char> source(src.bits(), src.width(), src.height(), 1, src.depth() / 8);
 
       ImageContext context(source);
@@ -173,7 +180,7 @@ void QStegano::decode()
    try
    {
       QImage src{ mInputFile };
-      src.convertTo(QImage::Format_RGB888);
+      src.convertTo(QtImageFormat);
       CImg<unsigned char> source(src.bits(), src.width(), src.height(), 1, src.depth() / 8);
 
       ImageContext context(source);
