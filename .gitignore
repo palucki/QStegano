@@ -1,0 +1,5 @@
+*.stash 
+*.vcxproj* 
+debug/ 
+release/
+.vs

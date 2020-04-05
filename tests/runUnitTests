@@ -1,0 +1,1 @@
+cd obj &&  cmake ../ && make -j4 && ./allTests.o
