@@ -19,6 +19,9 @@ Features:
 * configurable method: Basic LSB, XOR LSB, Inverted LSB or Optimal Pixel Adjustment Process
 * configurable number of bits used (1, 2, 4, 8)
 
+> **_NOTE:_**  Please keep in mind that the project and application serves educational purposes in the first place.
+> The algorithms used and method proposed is not suitable for any production / operational applications yet.
+
 ### Screenshots
 ![Hiding & decoding process](demo.gif)
 
